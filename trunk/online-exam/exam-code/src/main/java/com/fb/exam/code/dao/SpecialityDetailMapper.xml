@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fb.exam.code.dao.SpecialityDetailMapper" >
+
+
+    <select id="countSpecialityBySearch" parameterType="com.fb.exam.code.vo.SpecialitySearch" resultType="java.lang.Integer">
+        SELECT
+            count(*)
+        FROM
+            t_sch_speciality sc,
+            t_sch_speyears sy,
+            t_sch_colleges so
+        WHERE
+            sc.college_id = so.college_id
+            AND sc.speyears_id = sy.speyears_id
+        <if test="collegeId!=null">
+            and sc.college_id = #{collegeId}
+        </if>
+        <if test="speyearsId!=null">
+            and sc.speyears_id = #{speyearsId}
+        </if>
+        <if test="specialityName!=null">
+            and sc.speciality_name like #{specialityName}
+        </if>
+    </select>
+
+    <select id="getSpecialityDetailBySearch" parameterType="com.fb.exam.code.vo.SpecialitySearch" resultType="com.fb.exam.code.vo.SpecialityDetail">
+        SELECT
+            sc.*, sy.speyears_name,
+            so.college_name
+        FROM
+            t_sch_speciality sc,
+            t_sch_speyears sy,
+            t_sch_colleges so
+        WHERE
+            sc.college_id = so.college_id
+        AND sc.speyears_id = sy.speyears_id
+        <if test="collegeId!=null">
+            and sc.college_id = #{collegeId}
+        </if>
+        <if test="speyearsId!=null">
+            and sc.speyears_id = #{speyearsId}
+        </if>
+        <if test="specialityName!=null">
+            and sc.speciality_name like #{specialityName}
+        </if>
+        <if test="begin != null and length != null" >
+            limit #{begin} , #{length}
+        </if>
+    </select>
+
+</mapper>

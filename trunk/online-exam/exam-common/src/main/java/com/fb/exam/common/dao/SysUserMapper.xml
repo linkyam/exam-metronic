@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fb.exam.common.dao.SysUserMapper" >
+  <resultMap id="BaseResultMap" type="com.fb.exam.common.vo.SysUser" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="cell_phone" property="cellPhone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="card" property="card" jdbcType="VARCHAR" />
+    <result column="login_id" property="loginId" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="login_id_1" property="loginId1" jdbcType="VARCHAR" />
+    <result column="login_id_2" property="loginId2" jdbcType="VARCHAR" />
+    <result column="login_id_3" property="loginId3" jdbcType="VARCHAR" />
+    <result column="login_id_4" property="loginId4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_id, user_name, cell_phone, email, card, login_id, pwd, sex, role, status, login_id_1, 
+    login_id_2, login_id_3, login_id_4
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fb.exam.common.vo.SysUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="begin != null and length != null" >
+      limit #{begin} , #{length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sys_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sys_user
+    where user_id = #{userId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fb.exam.common.vo.SysUserExample" >
+    delete from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fb.exam.common.vo.SysUser" >
+    insert into t_sys_user (user_id, user_name, cell_phone, 
+      email, card, login_id, 
+      pwd, sex, role, status, 
+      login_id_1, login_id_2, login_id_3, 
+      login_id_4)
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{cellPhone,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{card,jdbcType=VARCHAR}, #{loginId,jdbcType=VARCHAR}, 
+      #{pwd,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, 
+      #{loginId1,jdbcType=VARCHAR}, #{loginId2,jdbcType=VARCHAR}, #{loginId3,jdbcType=VARCHAR}, 
+      #{loginId4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fb.exam.common.vo.SysUser" >
+    insert into t_sys_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="cellPhone != null" >
+        cell_phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="card != null" >
+        card,
+      </if>
+      <if test="loginId != null" >
+        login_id,
+      </if>
+      <if test="pwd != null" >
+        pwd,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="loginId1 != null" >
+        login_id_1,
+      </if>
+      <if test="loginId2 != null" >
+        login_id_2,
+      </if>
+      <if test="loginId3 != null" >
+        login_id_3,
+      </if>
+      <if test="loginId4 != null" >
+        login_id_4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="cellPhone != null" >
+        #{cellPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null" >
+        #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        #{role,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="loginId1 != null" >
+        #{loginId1,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId2 != null" >
+        #{loginId2,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId3 != null" >
+        #{loginId3,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId4 != null" >
+        #{loginId4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fb.exam.common.vo.SysUserExample" resultType="java.lang.Integer" >
+    select count(*) from t_sys_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_sys_user
+    <set >
+      <if test="record.userId != null" >
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cellPhone != null" >
+        cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.card != null" >
+        card = #{record.card,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginId != null" >
+        login_id = #{record.loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pwd != null" >
+        pwd = #{record.pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null" >
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.role != null" >
+        role = #{record.role,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginId1 != null" >
+        login_id_1 = #{record.loginId1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginId2 != null" >
+        login_id_2 = #{record.loginId2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginId3 != null" >
+        login_id_3 = #{record.loginId3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginId4 != null" >
+        login_id_4 = #{record.loginId4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_sys_user
+    set user_id = #{record.userId,jdbcType=INTEGER},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      cell_phone = #{record.cellPhone,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      card = #{record.card,jdbcType=VARCHAR},
+      login_id = #{record.loginId,jdbcType=VARCHAR},
+      pwd = #{record.pwd,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      role = #{record.role,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      login_id_1 = #{record.loginId1,jdbcType=VARCHAR},
+      login_id_2 = #{record.loginId2,jdbcType=VARCHAR},
+      login_id_3 = #{record.loginId3,jdbcType=VARCHAR},
+      login_id_4 = #{record.loginId4,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fb.exam.common.vo.SysUser" >
+    update t_sys_user
+    <set >
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="cellPhone != null" >
+        cell_phone = #{cellPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="card != null" >
+        card = #{card,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId != null" >
+        login_id = #{loginId,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null" >
+        pwd = #{pwd,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="role != null" >
+        role = #{role,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="loginId1 != null" >
+        login_id_1 = #{loginId1,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId2 != null" >
+        login_id_2 = #{loginId2,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId3 != null" >
+        login_id_3 = #{loginId3,jdbcType=VARCHAR},
+      </if>
+      <if test="loginId4 != null" >
+        login_id_4 = #{loginId4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fb.exam.common.vo.SysUser" >
+    update t_sys_user
+    set user_name = #{userName,jdbcType=VARCHAR},
+      cell_phone = #{cellPhone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      card = #{card,jdbcType=VARCHAR},
+      login_id = #{loginId,jdbcType=VARCHAR},
+      pwd = #{pwd,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      role = #{role,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      login_id_1 = #{loginId1,jdbcType=VARCHAR},
+      login_id_2 = #{loginId2,jdbcType=VARCHAR},
+      login_id_3 = #{loginId3,jdbcType=VARCHAR},
+      login_id_4 = #{loginId4,jdbcType=VARCHAR}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+</mapper>

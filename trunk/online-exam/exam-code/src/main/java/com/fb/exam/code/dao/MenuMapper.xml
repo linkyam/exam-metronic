@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fb.exam.code.dao.MenuMapper" >
+    <resultMap id="BaseResultMap" type="com.fb.exam.code.vo.Menu">
+        <id column="na_id" property="naId" jdbcType="INTEGER"/>
+        <result column="na_name" property="naName" jdbcType="VARCHAR"/>
+        <result column="na_describe" property="naDescribe" jdbcType="VARCHAR"/>
+        <result column="na_value" property="naValue" jdbcType="VARCHAR"/>
+        <result column="na_no" property="naNo" jdbcType="INTEGER"/>
+        <result column="na_url" property="naUrl" jdbcType="VARCHAR"/>
+        <result column="na_status" property="naStatus" jdbcType="INTEGER"/>
+        <collection property="menus" resultMap="MenuResultMap" ofType="com.fb.exam.common.vo.SysMenu">
+        </collection>
+    </resultMap>
+
+
+    <resultMap id="MenuResultMap" type="com.fb.exam.common.vo.SysMenu">
+        <id column="menu_id" property="menuId" jdbcType="INTEGER"/>
+        <result column="na_id" property="naId" jdbcType="INTEGER"/>
+        <result column="menu_name" property="menuName" jdbcType="VARCHAR"/>
+        <result column="menu_type" property="menuType" jdbcType="INTEGER"/>
+        <result column="menu_describe" property="menuDescribe" jdbcType="VARCHAR"/>
+        <result column="menu_url" property="menuUrl" jdbcType="VARCHAR"/>
+        <result column="menu_no" property="menuNo" jdbcType="INTEGER"/>
+        <result column="menu_status" property="menuStatus" jdbcType="INTEGER"/>
+        <result column="parentId" property="parentid" jdbcType="INTEGER"/>
+        <result column="menu_level" property="menuLevel" jdbcType="INTEGER"/>
+        <association property="childMenu" column="menu_id" select="getChildMenuByParentId">
+        </association>
+    </resultMap>
+
+    <select id="getAllMenu" resultMap="BaseResultMap">
+        SELECT
+            n.na_id,n.na_name,n.na_url, m.menu_id,m.menu_name,m.menu_url,m.parentId
+        FROM
+            t_sys_navigation n
+        inner JOIN t_sys_menu m ON n.na_id = m.na_id
+        AND m.menu_status = 1
+        AND m.parentId =0
+        AND n.na_status = 1
+        ORDER BY
+            n.na_no,
+            m.menu_no;
+    </select>
+
+    <select id="getChildMenuByParentId" resultMap="MenuResultMap" parameterType="java.lang.Integer">
+        select menu_id,menu_name,menu_url,parentId from t_sys_menu where parentId = #{menuId} and menu_status = 1 order by menu_no
+    </select>
+</mapper>

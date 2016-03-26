@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="dedede:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/dedede_jar</output-path>
+    <root id="archive" name="dedede.jar">
+      <element id="module-output" name="dedede" />
+    </root>
+  </artifact>
+</component>

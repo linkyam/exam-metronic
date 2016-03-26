@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fb.exam.code.dao.UserLoginMapper" >
+  <resultMap id="BaseResultMap" type="com.fb.exam.common.vo.SysUser" >
+    <id column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="cell_phone" property="cellPhone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="card" property="card" jdbcType="VARCHAR" />
+    <result column="login_id" property="loginId" jdbcType="VARCHAR" />
+    <result column="pwd" property="pwd" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="login_id_1" property="loginId1" jdbcType="VARCHAR" />
+    <result column="login_id_2" property="loginId2" jdbcType="VARCHAR" />
+    <result column="login_id_3" property="loginId3" jdbcType="VARCHAR" />
+    <result column="login_id_4" property="loginId4" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <select id="countByLoginType" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(*) from t_sys_user where lower(${countType}) = #{loginId} and status = 1
+    </select>
+
+    <select id="getUserByLogin" resultMap="BaseResultMap" parameterType="java.util.Map">
+        select
+        *
+        from t_sys_user
+        where lower(${countType}) = #{loginId}
+        and pwd = #{pwd}
+        and status = 1
+    </select>
+</mapper>

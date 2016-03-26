@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fb.exam.common.dao.SpecialityMapper" >
+  <resultMap id="BaseResultMap" type="com.fb.exam.common.vo.Speciality" >
+    <id column="speciality_id" property="specialityId" jdbcType="INTEGER" />
+    <result column="college_id" property="collegeId" jdbcType="INTEGER" />
+    <result column="speyears_id" property="speyearsId" jdbcType="INTEGER" />
+    <result column="speciality_name" property="specialityName" jdbcType="VARCHAR" />
+    <result column="comment" property="comment" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    speciality_id, college_id, speyears_id, speciality_name, comment, create_date
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.fb.exam.common.vo.SpecialityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from t_sch_speciality
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="begin != null and length != null" >
+      limit #{begin} , #{length}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_sch_speciality
+    where speciality_id = #{specialityId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_sch_speciality
+    where speciality_id = #{specialityId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fb.exam.common.vo.SpecialityExample" >
+    delete from t_sch_speciality
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fb.exam.common.vo.Speciality" >
+    insert into t_sch_speciality (speciality_id, college_id, speyears_id, 
+      speciality_name, comment, create_date
+      )
+    values (#{specialityId,jdbcType=INTEGER}, #{collegeId,jdbcType=INTEGER}, #{speyearsId,jdbcType=INTEGER}, 
+      #{specialityName,jdbcType=VARCHAR}, #{comment,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fb.exam.common.vo.Speciality" >
+    insert into t_sch_speciality
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="specialityId != null" >
+        speciality_id,
+      </if>
+      <if test="collegeId != null" >
+        college_id,
+      </if>
+      <if test="speyearsId != null" >
+        speyears_id,
+      </if>
+      <if test="specialityName != null" >
+        speciality_name,
+      </if>
+      <if test="comment != null" >
+        comment,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="specialityId != null" >
+        #{specialityId,jdbcType=INTEGER},
+      </if>
+      <if test="collegeId != null" >
+        #{collegeId,jdbcType=INTEGER},
+      </if>
+      <if test="speyearsId != null" >
+        #{speyearsId,jdbcType=INTEGER},
+      </if>
+      <if test="specialityName != null" >
+        #{specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fb.exam.common.vo.SpecialityExample" resultType="java.lang.Integer" >
+    select count(*) from t_sch_speciality
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_sch_speciality
+    <set >
+      <if test="record.specialityId != null" >
+        speciality_id = #{record.specialityId,jdbcType=INTEGER},
+      </if>
+      <if test="record.collegeId != null" >
+        college_id = #{record.collegeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.speyearsId != null" >
+        speyears_id = #{record.speyearsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.specialityName != null" >
+        speciality_name = #{record.specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comment != null" >
+        comment = #{record.comment,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_sch_speciality
+    set speciality_id = #{record.specialityId,jdbcType=INTEGER},
+      college_id = #{record.collegeId,jdbcType=INTEGER},
+      speyears_id = #{record.speyearsId,jdbcType=INTEGER},
+      speciality_name = #{record.specialityName,jdbcType=VARCHAR},
+      comment = #{record.comment,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fb.exam.common.vo.Speciality" >
+    update t_sch_speciality
+    <set >
+      <if test="collegeId != null" >
+        college_id = #{collegeId,jdbcType=INTEGER},
+      </if>
+      <if test="speyearsId != null" >
+        speyears_id = #{speyearsId,jdbcType=INTEGER},
+      </if>
+      <if test="specialityName != null" >
+        speciality_name = #{specialityName,jdbcType=VARCHAR},
+      </if>
+      <if test="comment != null" >
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+    </set>
+    where speciality_id = #{specialityId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fb.exam.common.vo.Speciality" >
+    update t_sch_speciality
+    set college_id = #{collegeId,jdbcType=INTEGER},
+      speyears_id = #{speyearsId,jdbcType=INTEGER},
+      speciality_name = #{specialityName,jdbcType=VARCHAR},
+      comment = #{comment,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE}
+    where speciality_id = #{specialityId,jdbcType=INTEGER}
+  </update>
+</mapper>
